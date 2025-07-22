@@ -28,7 +28,7 @@ static const std::string vehicleFileName = "vehicles.txt";
 // Function open creates and opens the Vehicle file
 // Throws an exception if the file cannot be opened
 //------------------------------------------------------------
-void open()
+void vehicleOpen()
 {
     // Try to open the vehicle file without overwriting the contents
     vehicleFile.open(vehicleFileName, std::ios::in | std::ios::out | std::ios::binary | std::ios::app);
@@ -58,7 +58,7 @@ void open()
 // Function reset seeks to the beginning of the Vehicle file
 // Throws an exception if the file is not open
 //------------------------------------------------------------
-void reset()
+void vehicleReset()
 {
     if (!vehicleFile.is_open())
     {
@@ -125,7 +125,7 @@ void writeVehicle(const Vehicle& v)
 
 // Function close closes the Vehicle file
 //------------------------------------------------------------
-void close()
+void vehicleClose()
 {
     if (vehicleFile.is_open())
     {

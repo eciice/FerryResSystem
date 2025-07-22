@@ -28,7 +28,7 @@ static const std::string vesselFileName = "vessels.txt";
 // Function open creates and opens the Vessel file
 // Throws an exception if the file cannot be opened
 //------------------------------------------------------------
-void open()
+void vesselOpen()
 {
     // Try to open the vessel file without overwriting the contents
     vesselFile.open(vesselFileName, std::ios::in | std::ios::out | std::ios::binary | std::ios::app);
@@ -58,7 +58,7 @@ void open()
 // Function reset seeks to the beginning of the Vessel file
 // Throws an exception if the file is not open
 //------------------------------------------------------------
-void reset()
+void vesselReset()
 {
     if (!vesselFile.is_open())
     {
@@ -125,7 +125,7 @@ void writeVessel(const Vessel& v)
 
 // Function close closes the Vessel file
 //------------------------------------------------------------
-void close()
+void vesselClose()
 {
     if (vesselFile.is_open())
     {

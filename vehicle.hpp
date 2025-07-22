@@ -34,11 +34,11 @@ struct Vehicle
 // Function open creates and opens the Vehicle file
 // Throws an exception if the file cannot be opened
 //------------------------------------------------------------
-void open();
+void vehicleOpen();
 // Function reset seeks to the beginning of the Vehicle file
 // Throws an exception if the file is not open
 //------------------------------------------------------------
-void reset();
+void vehicleReset();
 // Function getNextVehicle obtains a line from the Vehicle file
 // Returns a boolean if retrieving all the data was successful
 // Throws an exception if the read operation fails
@@ -50,4 +50,4 @@ bool getNextVehicle(Vehicle& v);
 void writeVehicle(const Vehicle& v);
 // Function close closes the Vehicle file
 //------------------------------------------------------------
-void close();
+void vehicleClose();

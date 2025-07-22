@@ -30,11 +30,11 @@ struct Vessel
 // Function open creates and opens the Vessel file
 // Throws an exception if the file cannot be opened
 //------------------------------------------------------------
-void open();
+void vesselOpen();
 // Function reset seeks to the beginning of the Vessel file
 // Throws an exception if the file is not open
 //------------------------------------------------------------
-void reset();
+void vesselReset();
 // Function getNextVessel obtains a line from the Vessel file
 // Returns a boolean if retrieving all the data was successful
 // Throws an exception if the read operation fails
@@ -46,4 +46,4 @@ bool getNextVessel(Vessel& v);
 void writeVessel(const Vessel& v);
 // Function close closes the Vessel file
 //------------------------------------------------------------
-void close();
+void vesselClose();
