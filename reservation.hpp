@@ -37,12 +37,12 @@ Reservation* next;
 // Function creates and opens reservation file.
 // Throw an exception if it cannot be opened.
 //----------------------------------------------------------------
-void open();
+void reservationOpen();
 
 // Function resets to the beginning of the list.
 // Throw an exception if it cannot be opened.
 //----------------------------------------------------------------
-void reset();
+void reservationReset();
 
 // Function getNextReservation returns a line from the data
 // Returns a boolean if the data is successfully read
@@ -58,7 +58,7 @@ void writeReservation();
 
 // Function closes reservation file
 //----------------------------------------------------------------
-void close();
+void reservationClose();
 
 // Function deleteReservation deletes a reservation with the provided
 // sailingID and vehicleLicence. Throws an exception if the record is not found.

@@ -22,7 +22,7 @@ static const std::string reservationFileName = "reservations.txt";
 // Function creates and opens reservation file.
 // Throw an exception if it cannot be opened.
 //----------------------------------------------------------------
-void open()
+void reservationOpen()
 {
     // Open the input file for reading
     std::ifstream file(reservationFileName);
@@ -63,7 +63,8 @@ void open()
 // Function resets to the beginning of the list.
 // Throw an exception if it cannot be opened.
 //----------------------------------------------------------------
-void reset(){
+void reservationReset()
+{
     //resets to beginning
     if (!head) {
         throw std::runtime_error("File not found.");
@@ -75,7 +76,8 @@ void reset(){
 // Returns a boolean if the data is successfully read
 // Throws an exception if there is an error with reading the files
 //----------------------------------------------------------------
-bool getNextReservation(std::string sailingID, std::string vehicleLicence){
+bool getNextReservation(std::string sailingID, std::string vehicleLicence)
+{
     Reservation* node = head;
     //loops and finds matching
     while (node) {
@@ -118,7 +120,7 @@ void writeReservation()
 
 // Function closes reservation file
 //----------------------------------------------------------------
-void close()
+void reservationClose()
 {
     if (!head) {
         throw std::runtime_error("File not found.");
