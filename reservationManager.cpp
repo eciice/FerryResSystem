@@ -70,7 +70,7 @@ void vehicleCheck(std::string vehicleLicence)
     bool vehicleExists = false;
     Vehicle v;
     //resets vehicle to start of list
-    reset();
+    vehicleReset();
     //find the vehicle
     while (getNextVehicle(v)) {
         if (v.vehicleLicence == vehicleLicence) {
@@ -202,7 +202,7 @@ return count;
 //----------------------------------------------------------------
 void checkIn(std::string sailingID, std::string vehicleLicence)
 {
-    reset();
+    vehicleReset();
     //loops through the file, if it matches, return true, else it will automatically be false
     Reservation r;
     while (getNextReservation(r.sailingID, r.vehicleLicence)) {

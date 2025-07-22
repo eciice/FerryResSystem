@@ -190,9 +190,3 @@ void displayCurrentMenu()
     std::cout << "Exiting Ferry Reservation System. Goodbye!" << std::endl;
     return;
 }
-
-int main()
-{
-    displayCurrentMenu();
-    return 0;
-}

@@ -5,7 +5,11 @@
  * Filename: main.cpp
  * 
  * Revision History: 
+ * Rev. 2 - 25/07/21 Modified by A. Kong
+ *        - implemented init, startAccepting, and shutdown
+ *        - removed stopAccepting
  * Rev. 1 - 25/07/06 Original by A. Kong
+ * 
  *
  * Description: Main module of the Ferry Reservation System,
  *              sends function calls to other modules to intialize/shutdown
@@ -15,7 +19,7 @@
 //================================================================
 
 #include <iostream>
-#include "ui.hpp" // include header files
+#include "ui.hpp"
 #include "sailingManager.hpp"
 #include "reservationManager.hpp"
 #include "reservation.hpp"
@@ -32,7 +36,10 @@ using std::cout;
 //----------------------------------------------------------------
  void init()
  {
-    std::cout << "I am starting up" << std::endl;
+    vehicleOpen();
+    vesselOpen();
+    reservationOpen();
+    sailingOpen();
     return;
  }
 
@@ -41,21 +48,17 @@ using std::cout;
 //----------------------------------------------------------------
 void startAccepting()
 {
-    std::cout << "UI is now accepting input" << std::endl;
-}
-
-// Function startAccepting shuts down the UI module
-//----------------------------------------------------------------
-void stopAccepting()
-{
-    std::cout << "UI is no longer accepting input" << std::endl;
+    displayCurrentMenu();
 }
 
 // Function shutdown shuts down all modules, excluding the UI module
 //----------------------------------------------------------------
  void shutdown()
  {
-    std::cout << "I am shutting down" << std::endl;
+    vehicleClose();
+    vesselClose();
+    reservationClose();
+    sailingClose();
     return;
  }
 
@@ -67,9 +70,7 @@ int main()
     init();
     // initialize UI module
     startAccepting();
-    // shutdown UI module
-    stopAccepting();
-    // shutdown all modules, including UI module
+    // shutdown all modules
     shutdown();
     return 0;
 }      

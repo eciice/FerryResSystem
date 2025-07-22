@@ -38,3 +38,6 @@ void sailingManagement();
 // Function reservation moves user to the reservations submenu.
 //----------------------------------------------------------------
 void reservation();
+
+// Function displays the appropriate menu to the user depending on currentMenu
+void displayCurrentMenu();

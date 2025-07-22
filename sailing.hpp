@@ -29,14 +29,14 @@ struct Sailing
 // Function open creates and opens the Sailing file
 // Throws an exception if the file cannot be opened
 //----------------------------------------------------------------
-void open();
+void sailingOpen();
 // Function close closes the Sailing file
 //----------------------------------------------------------------
-void close();
+void sailingClose();
 // Function reset seeks to the beginning of the Sailing file
 // Throws an exception if the file is not open
 //----------------------------------------------------------------
-void reset();
+void sailingReset();
 // Function getNextSailing obtains a line from the Sailing file
 // Returns a boolean if retrieving all the data was successful
 // Throws an exception if the read operation fails
