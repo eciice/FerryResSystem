@@ -14,9 +14,11 @@
 #include "reservation.hpp"
 #include <fstream>
 #include <stdexcept>
+#include <cstring>
+#include <cctype>
 static Reservation* head = nullptr;
 static Reservation* current = nullptr;
-static const std::string reservationFileName = "reservations.txt";
+static const std::string ReservationFile = "reservations.txt";
 //================================================================
 
 // Function creates and opens reservation file.
@@ -25,13 +27,13 @@ static const std::string reservationFileName = "reservations.txt";
 void reservationOpen()
 {
     // Open the input file for reading
-    std::ifstream file(reservationFileName);
+    std::ifstream file(ReservationFile);
     if (!file.is_open()) {
         throw std::runtime_error("Cannot open file.");
     }
 
     // Variables to temporarily store data read from the file
-    std::string sailingID, vehicleLicence;
+    char sailingID[8], vehicleLicence[10];
     bool onBoard, isLRL;
 
     // tail pointer helps in appending new nodes to the end of the list
@@ -40,7 +42,16 @@ void reservationOpen()
     // Read each line from the file until EOF
     while (file >> sailingID >> vehicleLicence >> onBoard >> isLRL) {
         // Create a new node with the read data
-        Reservation* node = new Reservation{sailingID, vehicleLicence, onBoard, isLRL, nullptr};
+        Reservation* node = new Reservation;
+        // Safely copy strings with strncpy and ensure null-termination
+        strncpy(node->sailingID, sailingID, 9);
+        node->sailingID[9] = '\0';
+    
+        strncpy(node->vehicleLicence, vehicleLicence, 10);
+        node->vehicleLicence[10] = '\0';
+    
+        node->onBoard = false;
+        node->isLRL = false;
 
         // If the list is empty, set both head and tail to the new node
         if (!head) {
@@ -76,12 +87,16 @@ void reservationReset()
 // Returns a boolean if the data is successfully read
 // Throws an exception if there is an error with reading the files
 //----------------------------------------------------------------
-bool getNextReservation(std::string sailingID, std::string vehicleLicence)
+bool getNextReservation(char sailingID[], char vehicleLicence[])
 {
+    if (!head) {
+        throw std::runtime_error("File not found.");
+    }
     Reservation* node = head;
     //loops and finds matching
+    
     while (node) {
-        if (node->sailingID == sailingID && node->vehicleLicence == vehicleLicence) {
+        if (strcmp(node->sailingID, sailingID) == 0 && strcmp(node->vehicleLicence, vehicleLicence) == 0) {
             return true;
         }
         //go next
@@ -97,8 +112,8 @@ bool getNextReservation(std::string sailingID, std::string vehicleLicence)
 void writeReservation()
 {
 //throw exception if file not opened
-   std::ofstream file(reservationFileName);
-    if (!file.is_open()) {
+   std::ofstream file(ReservationFile);
+    if(!file.is_open()) {
         throw std::runtime_error("Cannot open file for writing.");
     }
 
@@ -138,16 +153,16 @@ void reservationClose()
 // Function deleteReservation deletes a reservation with the provided
 // sailingID and vehicleLicence. Throws an exception if the record is not found.
 //----------------------------------------------------------------
-void deleteReservation(std::string sailingID, std::string vehicleLicence)
+void deleteReservation(char sailingID[], char vehicleLicence[])
 {
     //initialize head and prev for deletion
-Reservation* node = head;
+    Reservation* node = head;
     Reservation* prev = nullptr;
 
     //loops through the linked list
     while (node) {
         //if found
-        if (node->sailingID == sailingID && node->vehicleLicence == vehicleLicence) {
+        if (strcmp(node->sailingID, sailingID) == 0 && strcmp(node->vehicleLicence, vehicleLicence) == 0) {
             //if the value is found at the head
             if (prev == nullptr) {
                 head = node->next;
@@ -163,10 +178,8 @@ Reservation* node = head;
             delete node;
             return;
         }
-        //
         prev = node;
         node = node->next;
     }
-
     throw std::runtime_error("Reservation not found for deletion.");
 }

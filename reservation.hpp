@@ -25,8 +25,8 @@ using std::string;
 struct Reservation
 {
 
-std::string sailingID; // 9 digit sailing id
-std::string vehicleLicence; // Unique vehicle licence, consisting of 6-10 characters
+char sailingID[8]; // 9 digit sailing id
+char vehicleLicence[10]; // Unique vehicle licence, consisting of 6-10 characters
 bool onBoard; // Specifies if a reservation has checked in
 bool isLRL; // Specifies which section of the sailing the vehicle is to be parked
 Reservation* next; 
@@ -48,7 +48,7 @@ void reservationReset();
 // Returns a boolean if the data is successfully read
 // Throws an exception if there is an error with reading the files
 //----------------------------------------------------------------
-bool getNextReservation(std::string sailingID, std::string vehicleLicence);
+bool getNextReservation(char sailingID[], char vehicleLicence[]);
 
 // Function writeReservation writes to reservation file
 // Throws an exception if it fails
@@ -63,4 +63,4 @@ void reservationClose();
 // Function deleteReservation deletes a reservation with the provided
 // sailingID and vehicleLicence. Throws an exception if the record is not found.
 //----------------------------------------------------------------
-void deleteReservation(std::string sailingID, std::string vehicleLicence);
+void deleteReservation(char sailingID[], char vehicleLicence[]);

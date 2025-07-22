@@ -20,8 +20,8 @@ using std::string;
 //----------------------------------------------------------------
 struct Sailing
 {
-  std::string sailingID; // Sailing ID consisting of 9 characters
-  std::string vesselName; // Unique vessel name, consisting up to 20 characteres
+  char sailingID[10]; // Sailing ID consisting of 9 characters
+  char vesselName[25]; // Unique vessel name, consisting up to 20 characteres
   float lowRemainingLength; // Available low remaining length
   float highRemainingLength; // Available high remaining length
 };
