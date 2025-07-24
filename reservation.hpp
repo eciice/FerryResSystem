@@ -54,7 +54,7 @@ bool getNextReservation(Reservation r);
 // Function writeReservation writes to reservation file
 // Throws an exception if it fails
 //----------------------------------------------------------------
-void writeReservation();
+void writeReservation(const Reservation& r);
 
 
 // Function closes reservation file
