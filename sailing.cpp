@@ -3,10 +3,21 @@
 //================================================================
 /*
  * Filename: Sailing.cpp
+ * Revision History:
+ * Rev. 1 - 25/07/23 Original by C. Wen
  *
- * Description: Implementing sailing moduel file I/O with fixed
- * length binary records, checks read, write and opens the file 
- * at start up, checking queries that shows all records. 
+ * Description: Implementation file of the sailing moduel of the Ferry
+ * Reservation System, being the only module able
+ * to modify the file i/o containing information
+ * about sailing
+ * Is a data storage only module using fixed-length binary records
+ * All I/O operations allow for fast random access
+ * Should close and open the file once
+ * Should call the init() function before any
+ * operations
+ * Design Issues: Using linear locate sailing records
+ * Must be on a system able to use fstream
+ * Fixed-length records may waste space
  */
 
 //================================================================

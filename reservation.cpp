@@ -1,15 +1,26 @@
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//================================================================
-//================================================================
-
+ //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//============================================================
+//============================================================
 /*
- * Filename: reservation.cpp
- * 
- * Description: Reservation module of the Ferry Reservation System,
- *              checks if information already exists for reservation.
- * 
- */
-
+* Filename: reservation.cpp
+*
+* Revision History:
+* Rev. 1 - 25/07/23 Original by A. Chung
+*
+* Description: Implementation module of the Ferry Reservation System,
+* checks if information already exists for reservation and in some cases
+* deletes. This is the only module able to modify thee file i/o containing
+* information about reservations.
+* Is a data storage only module using fixed-length binary records
+* All I/O operations allow for fast random access
+* Should close and open the file once
+* Should call the init() function before any
+* operations
+* 
+* Design Issues: Using linear search for all traversal and deletions
+* Must be on a system able to use fstream
+* Fixed-length records may waste space
+*/
 //================================================================
 
 #include "reservation.hpp"
@@ -74,6 +85,10 @@ void reservationReset()
     reservationFile.seekg(0, std::ios::beg); // Set get position to the start of the file
 }
 
+// Function getNextReservation returns a line from the data
+// Returns a boolean if the data is successfully read
+// Throws an exception if there is an error with reading the files
+//----------------------------------------------------------------
 bool getNextReservation(Reservation r)
 {
     if (!reservationFile.is_open())
@@ -145,7 +160,8 @@ void reservationClose()
 //----------------------------------------------------------------
 void deleteReservation(char sailingID[], char vehicleLicence[])
 {
-    if (!reservationFile.is_open()) {
+    if (!reservationFile.is_open()) 
+    {
         throw std::runtime_error("deleteReservation: File not open.");
     }
     
@@ -154,7 +170,8 @@ void deleteReservation(char sailingID[], char vehicleLicence[])
     reservationFile.seekg(0, std::ios::end);
     std::streampos size = reservationFile.tellg();
     int total = static_cast<int>(size / sizeof(Reservation));
-    if (total == 0) {
+    if (total == 0)
+    {
         throw std::runtime_error("deleteReservation: No records to delete");
     }
 
@@ -164,7 +181,8 @@ void deleteReservation(char sailingID[], char vehicleLicence[])
     Reservation temp;
     Reservation lastRecord;
     
-    for (int i = 0; i < total; ++i) {
+    for (int i = 0; i < total; ++i) 
+    {
         reservationFile.read(reinterpret_cast<char*>(&temp), sizeof(Reservation));
         if (std::strncmp(temp.sailingID, sailingID, sizeof(temp.sailingID)) == 0 &&
             std::strncmp(temp.vehicleLicence, vehicleLicence, sizeof(temp.vehicleLicence)) == 0) {
@@ -173,7 +191,8 @@ void deleteReservation(char sailingID[], char vehicleLicence[])
         }
     }
     
-    if (target < 0) {
+    if (target < 0) 
+    {
         throw std::runtime_error(std::string("deleteReservation: Reservation with sailingID '") + 
                                sailingID + "' and vehicleLicence '" + vehicleLicence + "' not found");
     }
@@ -181,14 +200,16 @@ void deleteReservation(char sailingID[], char vehicleLicence[])
     // Get last record
     reservationFile.seekg((total - 1) * sizeof(Reservation), std::ios::beg);
     reservationFile.read(reinterpret_cast<char*>(&lastRecord), sizeof(Reservation));
-    if (reservationFile.fail()) {
+    if (reservationFile.fail()) 
+    {
         throw std::runtime_error("deleteReservation: Failed reading last record");
     }
 
     // Overwrite target slot with last record
     reservationFile.seekp(target * sizeof(Reservation), std::ios::beg);
     reservationFile.write(reinterpret_cast<const char*>(&lastRecord), sizeof(Reservation));
-    if (reservationFile.fail()) {
+    if (reservationFile.fail()) 
+    {
         throw std::runtime_error("deleteReservation: Overwrite failed");
     }
 
@@ -198,12 +219,14 @@ void deleteReservation(char sailingID[], char vehicleLicence[])
         reservationFile.flush();
         reservationFile.close();
         FILE* f = std::fopen(RESERVATIONFILENAME.c_str(), "r+b");
-        if (!f) {
+        if (!f) 
+        {
             throw std::runtime_error("deleteReservation: file open failed");
         }
         int fd = _fileno(f);
         long newSize = static_cast<long>((total - 1) * sizeof(Reservation));
-        if (_chsize_s(fd, newSize) != 0) {
+        if (_chsize_s(fd, newSize) != 0) 
+        {
             std::fclose(f);
             throw std::runtime_error("deleteReservation: truncate failed");
         }
@@ -213,11 +236,13 @@ void deleteReservation(char sailingID[], char vehicleLicence[])
     {
         reservationFile.close();
         int fd = ::open(RESERVATIONFILENAME.c_str(), O_RDWR);
-        if (fd < 0) {
+        if (fd < 0) 
+        {
             throw std::runtime_error("deleteReservation: open failed");
         }
         off_t newSize = static_cast<off_t>((total - 1) * sizeof(Reservation));
-        if (ftruncate(fd, newSize) != 0) {
+        if (ftruncate(fd, newSize) != 0) 
+        {
             ::close(fd);
             throw std::runtime_error("deleteReservation: truncate failed");
         }

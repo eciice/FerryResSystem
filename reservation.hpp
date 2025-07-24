@@ -1,15 +1,24 @@
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//================================================================
-//================================================================
-
+ //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//============================================================
+//============================================================
 /*
- * Filename: reservation.hpp
- * 
- * Description: Reservation module of the Ferry Reservation System,
- *              checks if information already exists for reservation.
- * 
- */
-
+* Filename: reservation.hpp
+*
+* Revision History:
+* Rev. 1 - 25/07/23 Original by A. Chung
+*
+* Description: Header file of the Reservation module of the Ferry Reservation System,
+* checks if information already exists for reservation and in some cases
+* deletes. This is the only module able to modify thee file i/o containing
+* information about reservations.
+* Is a data storage only module
+* Should call the init() function before any
+* operations
+* 
+* Design Issues: Using linear search for all traversal and deletions
+* Must be on a system able to use fstream
+* Fixed-length records may waste space
+*/
 //================================================================
 
 #pragma once
@@ -26,11 +35,10 @@ using std::string;
 struct Reservation
 {
 
-char sailingID[10]; // 9 digit sailing id
-char vehicleLicence[11]; // Unique vehicle licence, consisting of 6-10 characters
+char sailingID[9]; // 9 digit sailing id
+char vehicleLicence[10]; // Unique vehicle licence, consisting of 6-10 characters
 bool onBoard; // Specifies if a reservation has checked in
 bool isLRL; // Specifies which section of the sailing the vehicle is to be parked
-Reservation* next; 
 };
 
 //================================================================

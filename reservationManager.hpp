@@ -1,12 +1,17 @@
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//================================================================
-//================================================================
+//============================================================
+//============================================================
 /*
 * Filename: reservationManager.hpp
 *
-* Description: Reservation manager module of the Ferry Reservation System,
-* manages all functions and commands relating to reservations.
+* Revision History:
+* Rev. 1 - 25/07/23 Original by A. Chung
 *
+* Description: Header file for the reservationManager moduleof the Reservation
+* module of the FerryReservation System, being the module that
+* manages sailing, vehicle, and reservation module functions
+* 
+* Design Issues: Using linear search for all traversal and deletions
 */
 //================================================================
 #pragma once

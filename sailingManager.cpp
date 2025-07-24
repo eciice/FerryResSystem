@@ -1,16 +1,25 @@
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-//================================================================
-//================================================================
-
+//============================================================
+//============================================================
 /*
  * Filename: sailingManager.cpp
- * 
- * Description: Sailing manager initial implementation of the Ferry Reservation System,
- *              manages all functions and commands relating to sailings. 
- * 
- */
-
-//================================================================
+ *
+ * Revision History:
+ * Rev. 1 - 25/07/23 Original by C. Wen
+ *
+ * Description: sailingManager.cpp is the control module for
+ * managing sailing componets within Coastal Ferry Reservation
+ * System. It provides the interface logic for users to create,
+ * update, query and delete for sailings.
+ * This module performs high level validation and user input
+ * handling, while delegating low level operation to other modules
+ * Desgin considerations:
+ * Use fixed length binary storage in sailing.cpp
+ * Use Char[] for vessel and sailing ID for compatibility
+ * Must have fixed length binary format
+ * Advoid direct file manipulation
+*/
+//============================================================
 #include "sailingManager.hpp"
 #include "vessel.hpp"            
 #include "sailing.hpp"
