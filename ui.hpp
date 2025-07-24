@@ -41,4 +41,5 @@ void sailingManagement();
 void reservation();
 
 // Function displays the appropriate menu to the user depending on currentMenu
+//----------------------------------------------------------------
 void displayCurrentMenu();

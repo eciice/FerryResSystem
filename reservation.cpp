@@ -26,7 +26,7 @@
 #endif
 
 static std::fstream reservationFile;
-static const std::string RESERVATIONFILENAME = "reservations.txt";
+static const std::string RESERVATIONFILENAME = "reservations.dat";
 //================================================================
 
 // Function creates and opens reservation file.

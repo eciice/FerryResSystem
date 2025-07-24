@@ -85,6 +85,7 @@ void processInput()
             std::cout << "Please select a valid option" << std::endl;
             break;
         }
+        break;
     case reservationMenu:
         switch (userInput)
         {
@@ -112,6 +113,7 @@ void processInput()
             std::cout << "Please select a valid option" << std::endl;
             break;
         }
+        break;
     case sailingMenu:
         switch (userInput)
         {
@@ -132,23 +134,27 @@ void processInput()
         // query sailing
         case 3:
             querySailing();
+            break;
         // delete sailing
         case 4:
             removeReservations(querySailing());
+            break;
         // print sailing report
         case 5:
             cout << "Please enter the name"
                 << " of the desired printing location." << std::endl;
             cin >> printerName;
             printSailingReport(printerName);
+            break;
         // return to main menu
         case 6:
             currentMenu = mainMenu;
+            break;
         // invalid user input
         default:
             std::cout << "Please select a valid option" << std::endl;
-            break;
         }
+        break;
     case exitProgram:
         break;
     }
@@ -171,12 +177,14 @@ void displayCurrentMenu()
                 << "3. Create Vessel\n"
                 << "4. Exit" << std::endl;
             processInput();
+            break;
         case reservationMenu:
             std::cout << "\n=== Reservation Menu ===\n"
                 << "1. Create Reservation\n"
                 << "2. Delete Reservation\n"
                 << "3. Return to Main Menu" << std::endl;
             processInput();
+            break;
         case sailingMenu:
             std::cout << "\n=== Sailing Menu ===\n"
                 << "1. Check In\n"
@@ -186,6 +194,7 @@ void displayCurrentMenu()
                 << "5. Print Sailing Report\n"
                 << "6. Return to Main Menu" << std::endl;
             processInput();
+            break;
         }
     }
     currentMenu = mainMenu;

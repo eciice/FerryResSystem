@@ -290,19 +290,19 @@ while(true)
     }
 }
     // Create new reservation
-    Reservation* newRes = new Reservation;
-    // Safely copy strings with strncpy and ensure null-termination
-    strncpy(newRes->sailingID, sailingID, 9);
-    newRes->sailingID[9] = '\0';
-    
-    strncpy(newRes->vehicleLicence, vehicleLicence, 10);
-    newRes->vehicleLicence[10] = '\0';
-    
-    newRes->onBoard = false;
-    newRes->isLRL = false;
+    Reservation newRes;
 
-    //add to file
-    writeReservation();
+    strncpy(newRes.sailingID, sailingID, sizeof(newRes.sailingID) - 1);
+    newRes.sailingID[sizeof(newRes.sailingID) - 1] = '\0'; 
+
+    strncpy(newRes.vehicleLicence, vehicleLicence, sizeof(newRes.vehicleLicence) - 1);
+    newRes.vehicleLicence[sizeof(newRes.vehicleLicence) - 1] = '\0';
+
+    newRes.onBoard = false;
+    newRes.isLRL = false;
+
+    // Add to file
+    writeReservation(newRes);
 }
 // Function deleteReservations with parameters sailingID, vehicleLicence
 // deletes a reservation on the specified sailing
