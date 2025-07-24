@@ -11,6 +11,22 @@
 * Writes three Vessel records, then reads them back and checks
 * if they are written correctly. Will verify that
 * getNextVessel() returns false if failed.
+* Check end-of-file behaviour
+*
+* Test Type: Bottom-up integration
+* Preconditions:
+* - The Vessel file is not used by another module
+* - The file may or may not already exist
+* - If the file alreaady exists, it must be empty
+* Test Steps:
+* 1. Call vesselOpen()
+* 2. Write 3 vessel records with writeVessel()
+* 3. Just in case reset file using vesselReset()
+* 4. Create 3 new vessel objects and read 3 vessel records into
+* them using getNextVessel()
+* 5. Compare result data fields to the expected
+* 6. Check that getNextVessel returns false at the end of file
+* 7. Print "Pass" or "Fail"
 */
 //============================================================
 
