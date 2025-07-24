@@ -32,7 +32,7 @@
 // Module scope static variables
 //------------------------------------------------------------
 static std::fstream vesselFile; // file stream for the vessel data file
-static const std::string VESSELFILENAME = "vessels.txt"; // name of the vessel file
+static const std::string VESSELFILENAME = "vessels.dat"; // name of the vessel file
 
 //============================================================
 // Function vesselOpen creates and opens the Vessel file for binary read/write

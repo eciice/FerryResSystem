@@ -32,7 +32,7 @@
 // Module scope static variables
 //------------------------------------------------------------
 static std::fstream vehicleFile; // file stream for the vehicle data file
-static const std::string VEHICLEFILENAME = "vehicles.txt"; // name of the vessel file
+static const std::string VEHICLEFILENAME = "vehicles.dat"; // name of the vessel file
 
 //============================================================
 // Function vehicleOpen creates and opens the Vehicle file for binary read/write
