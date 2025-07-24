@@ -1,18 +1,25 @@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //============================================================
 //============================================================
 /*
 * Filename: vehicle.cpp
 *
-* Description: Header file of the Vehicle module of the Ferry
+* Revision History:
+* Rev. 1 - 25/07/20 Original by L. Xu
+*
+* Description: Implementation file of the Vehicle module of the Ferry
 * Reservation System, being the only module able
 * to modify the file i/o containing information
 * about vehicles
-* Is a data storage only module
+* Is a data storage only module using fixed-length binary records
+* All I/O operations allow for fast random access
+* Should close and open the file once
 * Should call the init() function before any
 * operations
-*
-* Revision History:
-* Rev. 1 - 25/07/20 Original by L. Xu
+* 
+* Design Issues: Using linear search for the data file
+* Must be on a system able to use fstream
+* Fixed-length records may waste space
 */
 //============================================================
 
@@ -21,41 +28,46 @@
 #include <stdexcept>
 #include <cstring> 
 
-static std::fstream vehicleFile;
-static const std::string vehicleFileName = "vehicles.txt";
+//============================================================
+// Module scope static variables
+//------------------------------------------------------------
+static std::fstream vehicleFile; // file stream for the vehicle data file
+static const std::string VEHICLEFILENAME = "vehicles.txt"; // name of the vessel file
 
 //============================================================
-// Function open creates and opens the Vehicle file
+// Function vehicleOpen creates and opens the Vehicle file for binary read/write
+// Takes and returns nothing
 // Throws an exception if the file cannot be opened
 //------------------------------------------------------------
 void vehicleOpen()
 {
     // Try to open the vehicle file without overwriting the contents
-    vehicleFile.open(vehicleFileName, std::ios::in | std::ios::out | std::ios::binary | std::ios::app);
+    vehicleFile.open(VEHICLEFILENAME, std::ios::in | std::ios::out | std::ios::binary | std::ios::app);
     if (!vehicleFile.is_open())
     {
         // Try to create a vehicle file if it does not exist
         vehicleFile.clear();
-        vehicleFile.open(vehicleFileName, std::ios::out | std::ios::binary);
+        vehicleFile.open(VEHICLEFILENAME, std::ios::out | std::ios::binary);
         
         if (!vehicleFile.is_open())
         {
             // Throw an exception if the file cannot be created
-            throw std::runtime_error("Cannot create " + vehicleFileName + ".");
+            throw std::runtime_error("Cannot create " + VEHICLEFILENAME + ".");
         }
         vehicleFile.close();
 
         // Try to now re-open the file for reading and writing
-        vehicleFile.open(vehicleFileName, std::ios::in | std::ios::out | std::ios::binary | std::ios::app);
+        vehicleFile.open(VEHICLEFILENAME, std::ios::in | std::ios::out | std::ios::binary | std::ios::app);
         if (!vehicleFile.is_open())
         {
             // Throw an exception if the file cannot be opened
-            throw std::runtime_error("Cannot open " + vehicleFileName + ".");
+            throw std::runtime_error("Cannot open " + VEHICLEFILENAME + ".");
         } 
     }
 }
 
-// Function reset seeks to the beginning of the Vehicle file
+// Function vehicleReset seeks to the beginning of the Vehicle file
+// Takes and returns nothing
 // Throws an exception if the file is not open
 //------------------------------------------------------------
 void vehicleReset()
@@ -63,23 +75,24 @@ void vehicleReset()
     if (!vehicleFile.is_open())
     {
         // Throw an exception if the file could not be opened
-        throw std::runtime_error("File " + vehicleFileName + "is not open.");
+        throw std::runtime_error("File " + VEHICLEFILENAME + "is not open.");
     }
     vehicleFile.clear();
     vehicleFile.seekg(0, std::ios::beg); // Set get position to the start of the file
     vehicleFile.seekp(0, std::ios::beg); // Set put position to the start of the file
 }
 
-// Function getNextVehicle obtains a line from the Vehicle file
+// Function getNextVehicle binary reads a line from the Vehicle file
 // Returns a boolean if retrieving all the data was successful
-// Throws an exception if the read operation fails
+// Takes a Vehicle object
+// Throws an exception if the binary read operation fails
 //------------------------------------------------------------
 bool getNextVehicle(Vehicle& v)
 {
     if (!vehicleFile.is_open())
     {
         // Throw an exception if the file is not open
-        throw std::runtime_error("File " + vehicleFileName + "is not open.");
+        throw std::runtime_error("File " + VEHICLEFILENAME + "is not open.");
     }
 
     // Read information of the next vehicle object in the file
@@ -94,21 +107,23 @@ bool getNextVehicle(Vehicle& v)
     if (!vehicleFile)
     {
         // Throw an exception if the file could not be read from
-        throw std::runtime_error("Error reading from file " + vehicleFileName + ".");
+        throw std::runtime_error("Error reading from file " + VEHICLEFILENAME + ".");
     }
 
     return true;
 }
 
-// Function writeVehicle writes to the Vehicle file
-// Throws an exception if the write operation fails
+// Function writeVehicle binary writes to the Vehicle file
+// Returns nothing
+// Takes a Vehicle object
+// Throws an exception if the binary write operation fails
 //------------------------------------------------------------
 void writeVehicle(const Vehicle& v)
 {
     if (!vehicleFile.is_open())
     {
         // Throw an exception if the file is not open
-        throw std::runtime_error("File " + vehicleFileName + "is not open.");
+        throw std::runtime_error("File " + VEHICLEFILENAME + "is not open.");
     }
 
     // Write information of the vehicle object at the end 
@@ -119,11 +134,13 @@ void writeVehicle(const Vehicle& v)
     if (!vehicleFile)
     {
         // Throw an exception if the file could not be written to
-        throw std::runtime_error("Error writing to file " + vehicleFileName + ".");
+        throw std::runtime_error("Error writing to file " + VEHICLEFILENAME + ".");
     }
 }
 
 // Function close closes the Vehicle file
+// Takes and returns nothing
+// Throws an exception if the file was already closed
 //------------------------------------------------------------
 void vehicleClose()
 {
@@ -134,6 +151,6 @@ void vehicleClose()
     else
     {
         // Throw an exception if the file was already closed
-        throw std::runtime_error("File " + vehicleFileName + "was already closed.");
+        throw std::runtime_error("File " + VEHICLEFILENAME + "was already closed.");
     }
 }
