@@ -1,3 +1,4 @@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //================================================================
 //================================================================
 /*
@@ -24,7 +25,7 @@ void accessSailingManagerUpdate(char sailingID[])
     try
     {
         // First verify the sailing exists
-        if (checkSailingExists(sailingID) != 1)
+        if (sailingManagerExists(sailingID) != 1)
         {
             throw std::runtime_error("Sailing does not exist.");
         }
@@ -50,7 +51,7 @@ void accessSailingManagerQuery(char sailingID[])
     try
     {
         // Verify sailing exists
-        if (checkSailingExists(sailingID))
+        if (sailingManagerExists(sailingID))
         {
             // Display sailing details
             std::string selectedSailing = querySailing();
@@ -60,7 +61,7 @@ void accessSailingManagerQuery(char sailingID[])
             std::cout << "Total reservations: " << reservations << std::endl;
             
             // Show vessel capacity
-            std::string vessel = getVessel(); // Gets vessel for this sailing
+            char* vessel = getVessel(); // Gets vessel for this sailing
             int capacity = getVesselLength(vessel);
             std::cout << "Vessel capacity: " << capacity << " meters" << std::endl;
         }
@@ -82,13 +83,15 @@ void vehicleCheck(char vehicleLicence[])
     //resets vehicle to start of list
     reservationReset();
     //find the vehicle
-    while (getNextVehicle(v)) {
+    while (getNextVehicle(v)) 
+    {
         if (strcmp(v.vehicleLicence, vehicleLicence) == 0) {
             vehicleExists = true;
             break;
         }
     }
-    if (!vehicleExists) {
+    if (!vehicleExists) 
+    {
         // Vehicle doesn't exist - create new record
         Vehicle newVehicle;
         strncpy(newVehicle.vehicleLicence, vehicleLicence, sizeof(newVehicle.vehicleLicence) - 1);
@@ -126,7 +129,7 @@ void vehicleCheck(char vehicleLicence[])
         {
             std::cout << "Enter the height of the vehicle in meters (Range: 2.1-9.9m max): ";
             std::cin >> newVehicle.vehicleHeight;
-            if(newVehicle.vehicleHeight < 2.1 && newVehicle.vehicleHeight > 9.9)
+            if (newVehicle.vehicleHeight < 2.1 && newVehicle.vehicleHeight > 9.9)
             {
                 std::cout << "Error: vehicle height is invalid (Range: 2.1-9.9m max)\n";
             }
@@ -157,12 +160,12 @@ void createReservation(char sailingID[], char vehicleLicence[]){
     cout << "Enter 1 to create a reservation. 0 to go back to the main menu\n";
     while(true)
     {
-    cout << "Enter the licence plate of the vehicle (Length: 10 char max.):\n";
-    
-         std::cin >> vehicleLicence;
-         if (strlen(vehicleLicence) > 10)
+        cout << "Enter the licence plate of the vehicle (Length: 10 char max.):\n";
+
+        std::cin >> vehicleLicence;
+        if (strlen(vehicleLicence) > 10)
         {
-                std::cout << "Error: vehicle height is invalid (Length: 10 char max.)\n";
+            std::cout << "Error: vehicle height is invalid (Length: 10 char max.)\n";
         }
         else
         {
@@ -280,7 +283,8 @@ while(true)
     if(valid)
     {
         break; // Valid format
-    } else
+    } 
+    else
     {
         cout << "Error: Invalid format. Please use ttt-dd-hh (3 letters, 2 digits, 2 digits)\n";
     }
@@ -323,10 +327,10 @@ void deleteReservations(char sailingID[])
         {
             if (prev == nullptr) 
             {
-    
                 head = current->next;
                 current = head;
-            } else
+            } 
+            else
             {
                 prev->next = current->next;
                 current = current->next;
@@ -338,23 +342,25 @@ void deleteReservations(char sailingID[])
             current = current->next;
         
     }
-        throw std::runtime_error("No reservations found for this sailing.");
+    throw std::runtime_error("No reservations found for this sailing.");
 }
 // Function viewReservations returns the number of reservations for a sailing
 int viewReservations(char sailingID[])
 {
-    if(head == nullptr){
+    if(head == nullptr)
+    {
         throw std::runtime_error("File not found");
     }
     Reservation* current = head;
 
     int count = 0;
     //loops for all sailing and counts sailing
-    while (current) {
+    while (current)
+    {
         if (strcmp(current->sailingID, sailingID) == 0)
         {
-        count++;
-         current = current->next;
+            count++;
+            current = current->next;
         }
     }
     if (count == 0)
@@ -366,18 +372,50 @@ int viewReservations(char sailingID[])
 }
 // Function checkIn() sets the status of specified reservation as checked in
 //----------------------------------------------------------------
-void checkIn(char sailingID[], char vehicleLicence[])
+float checkIn(char sailingID[], char vehicleLicence[])
 {
+    float fare = 0;
     //loops through the file, if it matches, return true, else it will automatically be false
     Reservation r;
     reservationReset();
-    while (getNextReservation(r.sailingID, r.vehicleLicence))
+    while (getNextReservation(r))
     {
         if (strcmp(r.sailingID, sailingID) == 0 && strcmp(r.vehicleLicence, vehicleLicence) == 0)
         {
             r.onBoard = true;
-            return;
+            break;
         }
     }
+    if(r.isLRL == true)
+    {
+        fare = 14;
+        return fare;
+    }
+    else
+    {
+        // Get vehicle dimensions for non-LRL vehicles
+                float length, height;
+                
+                std::cout << "Enter the length of the vehicle in meters (Range: 7.1-99.9 max): ";
+                std::cin >> length;
+                while(length < 7.1 || length > 99.9) 
+                {
+                    std::cout << "Invalid length. Please enter between 7.1 and 99.9 meters: ";
+                    std::cin >> length;
+                }
+                
+                std::cout << "Enter the height of the vehicle in meters (Range: 2.1-9.9m max): ";
+                std::cin >> height;
+                while(height < 2.1 || height > 9.9) 
+                {
+                    std::cout << "Invalid height. Please enter between 2.1 and 9.9 meters: ";
+                    std::cin >> height;
+                }
+                
+                // Calculate fare
+                fare = (length * 2) + (height * 3);
+                return fare;
+    }
     throw std::runtime_error("Reservation not found for check in.");
+    return 0; //unreachable
 }

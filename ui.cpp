@@ -1,3 +1,4 @@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //================================================================
 //================================================================
 
@@ -52,10 +53,10 @@ void processInput()
 {
     // variable initialization
     int userInput;
-    std::string printerName; // MAY NEED TO CHANGE THIS VAR TYPE
-    std::string sailingID; // MAY NEED TO CHANGE THIS VAR TYPE
-    std::string vehicleLicence; // MAY NEED TO CHANGE VAR TYPE
-    std::string vesselName; // MAY NEED TO CHANGE VAR TYPE
+    char* printerName;
+    char sailingID[10];
+    char vehicleLicence[11];
+    char vesselName[26];
     std::cout << "Enter choice: " << std::endl;
     std::cin >> userInput;
 
@@ -187,6 +188,7 @@ void displayCurrentMenu()
             processInput();
         }
     }
+    currentMenu = mainMenu;
     std::cout << "Exiting Ferry Reservation System. Goodbye!" << std::endl;
     return;
 }

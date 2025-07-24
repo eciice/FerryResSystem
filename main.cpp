@@ -1,3 +1,4 @@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //================================================================
 //================================================================
 
@@ -36,6 +37,7 @@ using std::cout;
 //----------------------------------------------------------------
  void init()
  {
+    std::cout << "Initiating program" << std::endl;
     vehicleOpen();
     vesselOpen();
     reservationOpen();
@@ -53,14 +55,15 @@ void startAccepting()
 
 // Function shutdown shuts down all modules, excluding the UI module
 //----------------------------------------------------------------
- void shutdown()
- {
+void shutdown()
+{
+    std::cout << "Shutting down program" << std::endl;
     vehicleClose();
     vesselClose();
     reservationClose();
     sailingClose();
     return;
- }
+}
 
 //----------------------------------------------------------------
 

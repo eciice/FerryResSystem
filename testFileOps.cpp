@@ -48,7 +48,7 @@
 int main()
 {
 
-    bool pass=true; // Boolean to check if written = read values
+    bool pass = true; // Boolean to check if written = read values
 
     try 
     {

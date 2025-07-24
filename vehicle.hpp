@@ -1,3 +1,4 @@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //============================================================
 //============================================================
 /*
@@ -24,7 +25,7 @@
 //------------------------------------------------------------
 struct Vehicle
 {
-    char vehicleLicence[10];
+    char vehicleLicence[11];
     // Unique vehicle licence, consisting of 6-10 characters
     char phone[14]; // Unique phone number
     float vehicleHeight; // Vehicle height (meters)

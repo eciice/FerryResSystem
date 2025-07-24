@@ -96,7 +96,7 @@ bool getNextVessel(Vessel& v)
     }
 
     // Read information of the next vessel object in the file
-    vesselFile.read(reinterpret_cast<char *>(&v), sizeof(Vessel));
+    vesselFile.read(reinterpret_cast < char *> (&v), sizeof(Vessel));
 
     if (vesselFile.eof())
     {

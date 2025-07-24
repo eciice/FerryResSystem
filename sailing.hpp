@@ -1,3 +1,4 @@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //================================================================
 //================================================================
 /*
@@ -21,7 +22,7 @@ using std::string;
 struct Sailing
 {
   char sailingID[10]; // Sailing ID consisting of 9 characters
-  char vesselName[25]; // Unique vessel name, consisting up to 20 characteres
+  char vesselName[26]; // Unique vessel name, consisting up to 25 characteres
   float lowRemainingLength; // Available low remaining length
   float highRemainingLength; // Available high remaining length
 };
@@ -50,3 +51,7 @@ void writeSailing(const Sailing& s);
 // sailingID. Throws an exception if the record is not found.
 //----------------------------------------------------------------
 void deleteSailing(const std::string sailingID);
+// Function checkSailingExists checks if a sailing with the provided
+// sailingID exists. Returns sailingID, otherwise throws exception.
+//----------------------------------------------------------------
+int checkSailingExists(const char sailingID[]);

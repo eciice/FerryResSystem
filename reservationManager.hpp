@@ -1,3 +1,4 @@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //================================================================
 //================================================================
 /*
@@ -44,4 +45,4 @@ void deleteReservations(char sailingID[]);
 int viewReservations(char sailingID[]);
 // Function checkIn() sets the status of specified reservation as checked in
 //----------------------------------------------------------------
-void checkIn(char sailingID[], char vehicleLicence[]);
+float checkIn(char sailingID[], char vehicleLicence[]);
